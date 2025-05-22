@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("./models/connection"); // require pour la connexionn à la bdd
 
 var express = require("express");
 var path = require("path");
@@ -13,7 +14,6 @@ var app = express();
 const cors = require("cors"); // protextion flux back front
 app.use(cors());
 
-require("./models/connection"); // require pour la connexionn à la bdd
 
 app.use(logger("dev"));
 app.use(express.json());
