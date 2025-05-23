@@ -7,7 +7,6 @@ const Faq = require("../models/faq");
 
 router.get('/', (req, res) => {
     Faq.find().then(data => {
-        console.log("test be => ", data)
         res.json({FAQ: data})
     })
 })
