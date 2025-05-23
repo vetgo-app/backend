@@ -11,9 +11,9 @@ const storeSchema = mongoose.Schema({
   specialization: String,
   occupation: String,
   price: Number,
-  emergency: Boolean,
-  visio: Boolean,
-  homeConsultation: Boolean,
+  isSelectedUrgence: Boolean,
+  isSelectedVisio: Boolean,
+  isSelectedDom: Boolean,
   address: addressSchema,
 });
 

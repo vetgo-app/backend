@@ -24,9 +24,9 @@ router.post("/addStore", function (req, res) {
       specialization: req.body.specialization,
       occupation: req.body.occupation,
       price: req.body.price,
-      emergency: req.body.emergency,
-      visio: req.body.visio,
-      homeConsultation: req.body.homeConsultation,
+      isSelectedUrgence: req.body.isSelectedUrgence,
+      isSelectedVisio: req.body.isSelectedVisio,
+      isSelectedDom: req.body.isSelectedDom,
       address: req.body.address,
     });
     newStore.save().then(() => {
