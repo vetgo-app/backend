@@ -9,10 +9,16 @@ const bcrypt = require('bcrypt');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
+  User.find().then(data => {
+    res.json({ result: true, data });
+  }
+  ).catch(err => {
+    res.json({ result: false, error: err.message });
+  }
+  );
 });
 
-// INSCRIPTION D'UN UTILISATEUR PARTICULIER
+// ------------PARTICULIER-----------------------------------------------------------INSCRIPTION D'UN UTILISATEUR 
 router.post('/signup', function (req, res) {
   if (!checkBody(req.body, ['firstname', 'lastname', 'email', 'password'])) {
     return res.json({ result: false, error: 'Missing or empty fields' });
@@ -42,7 +48,7 @@ router.post('/signup', function (req, res) {
   })
 });
 
-// CONNEXION D'UN UTILISATEUR PARTICULIER
+// ------------------PARTICULIER-----------------------------------------------------CONNEXION D'UN UTILISATEUR
 router.post('/signin', function (req, res) {
   if (!checkBody(req.body, ['email', 'password'])) {
     return res.json({ result: false, error: 'Missing or empty fields' });
@@ -63,8 +69,8 @@ router.post('/signin', function (req, res) {
   });
 });
 
-// INSCRIPTION D'UN PROFESSIONNEL
-router.post('/signupPro', function (req, res) {
+// --------------------PROFESSIONNEL---------------------------------------------------INSCRIPTION D'UN UTILISATEUR
+router.post('/signUpPro', function (req, res) {
   if (!checkBody(req.body, ['firstname', 'lastname', 'email', 'password'])) {
     return res.json({ result: false, error: 'Missing or empty fields' });
   }
@@ -93,8 +99,8 @@ router.post('/signupPro', function (req, res) {
   })
 });
 
-// CONNEXION D'UN UTILISATEUR PARTICULIER
-router.post('/signinPro', function (req, res) {
+// -----------PROFESSIONNEL--------------------------------------------CONNEXION D'UN UTILISATEUR 
+router.post('/signInPro', function (req, res) {
   if (!checkBody(req.body, ['email', 'password'])) {
     return res.json({ result: false, error: 'Missing or empty fields' });
   }
