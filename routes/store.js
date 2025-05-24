@@ -21,6 +21,7 @@ router.post("/addStore", function (req, res) {
     res.json({ result: false, message: "un des champs est manquants" });
   } else {
     const newStore = new Store({
+      user: req.body.user, // relation entre les collections user et store
       specialization: req.body.specialization,
       occupation: req.body.occupation,
       price: req.body.price,
