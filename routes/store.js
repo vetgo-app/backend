@@ -5,9 +5,11 @@ require("../models/connection");
 const Store = require("../models/stores");
 
 router.get("/", function (req, res) {
-  Store.find().then((data) => {
-    res.json({ result: true, data });
-  });
+  Store.find()
+    .populate("user") //populate permet de récuperer toute la collection user et pas seulement la ligne id user
+    .then((data) => {
+      res.json({ result: true, data });
+    });
 });
 
 router.post("/addStore", function (req, res) {
