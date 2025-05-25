@@ -68,6 +68,23 @@ router.post('/signin', function (req, res) {
     });
 });
 
+// --------------------PARTICULIER--------------------------------------------------POSE D'UN RDV
+
+router
+
+
+router.get('/canBookRdv/:token', (req, res) => {
+  User.findOne({ token: req.params.token }).then(data => {
+    if (data) {
+      res.json({ result: true, user: data });
+    } else {
+      res.json({ result: false, error: 'User not found' });
+    }
+  });
+});
+
+
+
 // --------------------PROFESSIONNEL---------------------------------------------------INSCRIPTION D'UN UTILISATEUR
 router.post('/signUpPro', function (req, res) {
   if (!checkBody(req.body, ['firstname', 'lastname', 'email', 'password'])) {
