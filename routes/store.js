@@ -4,8 +4,8 @@ var router = express.Router();
 require("../models/connection");
 const Store = require("../models/stores");
 
-router.get("/", function (req, res) {
-  Store.find()
+router.get("/:user", function (req, res) {
+  Store.findOne({ user: req.params.user }) // on cherche dans la collection store l'id user
     .populate("user") //populate permet de récuperer toute la collection user et pas seulement la ligne id user
     .then((data) => {
       res.json({ result: true, data });
