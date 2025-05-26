@@ -3,11 +3,11 @@ var router = express.Router();
 
 require("../models/connection");
 
-const Faq = require("../models/faq");
+const Appointments = require("../models/appointments");
 
 router.get('/', (req, res) => {
-    Faq.find().then(data => {
-        res.json({FAQ: data})
+    Appointments.find().then(data => {
+        res.json({Overview: data})
     })
 })
 
