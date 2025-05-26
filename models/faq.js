@@ -1,5 +1,7 @@
+// Import of mongoose
 const mongoose = require('mongoose');
 
+// Creation of the Schema
 const faqSchema = mongoose.Schema({
     questionFaq: String,
     réponseFaq: String,

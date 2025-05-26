@@ -4,12 +4,20 @@ var router = express.Router();
 require("../models/connection");
 const Store = require("../models/stores");
 
-router.get("/:user", function (req, res) {
-  Store.findOne({ user: req.params.user }) // on cherche dans la collection store l'id user
-    .populate("user") //populate permet de récuperer toute la collection user et pas seulement la ligne id user
-    .then((data) => {
-      res.json({ result: true, data });
-    });
+router.get("/:storeId?", function (req, res) {
+  if (req.params.storeId) {
+    Store.findById(req.params.storeId)
+      .populate("user") //populate permet de récuperer toute la collection user et pas seulement la ligne id user
+      .then((data) => {
+        res.json({ result: true, data }); // => data va être un OBJET (document)
+      });
+  } else {
+    Store.find()
+      .populate("user") //populate permet de récuperer toute la collection user et pas seulement la ligne id user
+      .then((data) => {
+        res.json({ result: true, data }); // => data va être un TABLEAU (documentS)
+      });
+  }
 });
 
 router.post("/addStore", function (req, res) {

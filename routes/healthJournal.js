@@ -3,11 +3,11 @@ var router = express.Router();
 
 require("../models/connection");
 
-const Faq = require("../models/faq");
+const HealthJournal = require("../models/healthJournal");
 
 router.get('/', (req, res) => {
-    Faq.find().then(data => {
-        res.json({FAQ: data})
+    HealthJournal.find().then(data => {
+        res.json({animalInformations: data})
     })
 })
 
