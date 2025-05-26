@@ -19,7 +19,7 @@ router.post("/addAppointment", (req, res) => {
         Reason: req.body.Reason,
         firstRdv: req.body.firstRdv || false,
         isMyAnimal: req.body.isMyAnimal || false,
-    });
+    })
 
     newAppointment
         .save()
@@ -29,4 +29,6 @@ router.post("/addAppointment", (req, res) => {
         .catch((err) => {
             return res.json({ result: false, error: err.message });
         });
-}
+});
+
+module.exports = router;
