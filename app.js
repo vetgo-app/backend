@@ -17,6 +17,9 @@ var app = express();
 const cors = require("cors"); // Flow back - front protection
 app.use(cors());
 
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
+
 require("./models/connection"); // Connection to Mongo DB
 
 app.use(logger("dev"));
