@@ -52,10 +52,11 @@ router.post("/signin", function (req, res) {
   }
 
   User.findOne({ email: req.body.email })
+    .lean()
     .then((data) => {
       if (data) {
         if (bcrypt.compareSync(req.body.password, data.password)) {
-          return res.json({ result: true, token: data.token });
+          return res.json({ result: true, ...data });
         } else {
           return res.json({ result: false, error: "Invalid password" });
         }
