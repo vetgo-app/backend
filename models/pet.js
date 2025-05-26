@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
 const documentSchema = mongoose.Schema({
+    uid: String,
     file: String,
-    type: String,
+    docName: String,
     date: Date,
 });
 
@@ -11,9 +12,9 @@ const petSchema = mongoose.Schema({
     type: String,
     breed: String,
     age: Number,
-    weight: Number,
+    weight: String,
     photo: String,
-    documents: documentSchema,
+    documents: [documentSchema],
     owner: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
 })
 

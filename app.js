@@ -10,7 +10,7 @@ var usersRouter = require("./routes/users");
 var storesRouter = require("./routes/store");
 var faqRouter = require("./routes/faq");
 var appointmentsRouter = require("./routes/appointments");
-var healthJournalRouter = require("./routes/healthJournal");
+var petDocumentsRouter = require("./routes/petDocuments");
 
 var app = express();
 
@@ -33,6 +33,6 @@ app.use("/users", usersRouter);
 app.use("/store", storesRouter);
 app.use("/faq", faqRouter);
 app.use("/appointments", appointmentsRouter);
-app.use("/healthJournal", healthJournalRouter);
+app.use("/petDocuments", petDocumentsRouter);
 
 module.exports = app;
