@@ -7,7 +7,7 @@ const addressSchema = mongoose.Schema({
 });
 
 const storeSchema = mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "users" }, //ref au schema users
   specialization: String,
   occupation: String,
   price: Number,

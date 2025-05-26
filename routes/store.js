@@ -5,16 +5,19 @@ require("../models/connection");
 const Store = require("../models/stores");
 
 router.get("/:storeId?", function (req, res) {
+  console.log("hrere");
   if (req.params.storeId) {
     Store.findById(req.params.storeId)
       .populate("user") //populate permet de récuperer toute la collection user et pas seulement la ligne id user
       .then((data) => {
         res.json({ result: true, data }); // => data va être un OBJET (document)
+        console.log("id", data);
       });
   } else {
     Store.find()
       .populate("user") //populate permet de récuperer toute la collection user et pas seulement la ligne id user
       .then((data) => {
+        console.log(data);
         res.json({ result: true, data }); // => data va être un TABLEAU (documentS)
       });
   }

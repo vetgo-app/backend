@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 require("../models/connection");
-const User = require("../models/user");
+const User = require("../models/users");
 const { checkBody } = require("../modules/checkBody");
 const uid2 = require("uid2");
 const bcrypt = require("bcrypt");
@@ -70,20 +70,17 @@ router.post("/signin", function (req, res) {
 
 // --------------------PARTICULIER--------------------------------------------------POSE D'UN RDV
 
-router
+router;
 
-
-router.get('/canBookRdv/:token', (req, res) => {
-  User.findOne({ token: req.params.token }).then(data => {
+router.get("/canBookRdv/:token", (req, res) => {
+  User.findOne({ token: req.params.token }).then((data) => {
     if (data) {
       res.json({ result: true, user: data });
     } else {
-      res.json({ result: false, error: 'User not found' });
+      res.json({ result: false, error: "User not found" });
     }
   });
 });
-
-
 
 // --------------------PROFESSIONNEL---------------------------------------------------INSCRIPTION D'UN UTILISATEUR
 router.post("/signUpPro", function (req, res) {
