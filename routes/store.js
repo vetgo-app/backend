@@ -5,9 +5,11 @@ require("../models/connection");
 const Store = require("../models/stores");
 
 router.get("/", function (req, res) {
-  Store.find().then((data) => {
-    res.json({ result: true, data });
-  });
+  Store.find()
+    .populate("user") //populate permet de récuperer toute la collection user et pas seulement la ligne id user
+    .then((data) => {
+      res.json({ result: true, data });
+    });
 });
 
 router.post("/addStore", function (req, res) {
@@ -21,12 +23,13 @@ router.post("/addStore", function (req, res) {
     res.json({ result: false, message: "un des champs est manquants" });
   } else {
     const newStore = new Store({
+      user: req.body.user, // relation entre les collections user et store
       specialization: req.body.specialization,
       occupation: req.body.occupation,
       price: req.body.price,
-      emergency: req.body.emergency,
-      visio: req.body.visio,
-      homeConsultation: req.body.homeConsultation,
+      isSelectedUrgence: req.body.isSelectedUrgence,
+      isSelectedVisio: req.body.isSelectedVisio,
+      isSelectedDom: req.body.isSelectedDom,
       address: req.body.address,
     });
     newStore.save().then(() => {
