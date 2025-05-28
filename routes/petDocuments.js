@@ -77,11 +77,10 @@ router.get("/:petId", (req, res) => {
 // Getting the documents from the HealthJournal and Upload the document on Cloudninary
 router.post("/:petId", async (req, res) => {
   if (!req.params.petId) {
-    res.json({ result: false, error: "Pas de params" });
+    res.json({ result: false, error: "Animal ajouté" });
   }
 
-  // Move to temporary file
-  const docUniqueId = uniqid();
+  // Move to temporary file const docUniqueId = uniqid();
   const documentPath = `./tmp/${docUniqueId}.pdf`;
   const resultMove = await req.files.animalNewDocument.mv(documentPath);
   const docName = req.files.animalNewDocument?.name;
