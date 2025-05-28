@@ -9,47 +9,50 @@ const path = require("path");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
-
 router.get("/pet/:id", function (req, res) {
-    Pet.findById(req.params.id)
-        .populate("owner")
-        .then((data) => {
-            if (data) {
-                return res.json({ result: true, pet: data });
-            } else {
-                return res.json({ result: false, error: "Pet not found" });
-            }
-        })
-        .catch((err) => {
-            return res.json({ result: false, error: err.message });
-        });
-}
-);
-
-router.post('/addPet', (req, res) => {
-    if (!checkBody(req.body, ['name', 'type', 'breed', 'age', 'weight'])) {
-        return res.json({ result: false, error: 'Missing or empty fields' });
-    }
-
-    const newPet = new Pet({
-        name: req.body.name,
-        type: req.body.type,
-        breed: req.body.breed,
-        age: req.body.age,
-        weight: req.body.weight,
-        photo: null || req.body.photo,
-        owner: req.body.owner,
+  Pet.findById(req.params.id)
+    .populate("owner")
+    .then((data) => {
+      if (data) {
+        return res.json({ result: true, pet: data });
+      } else {
+        return res.json({ result: false, error: "Pet not found" });
+      }
+    })
+    .catch((err) => {
+      return res.json({ result: false, error: err.message });
     });
+});
 
-    newPet
-        .save()
-        .then((data) => {
-            return res.json({ result: true, pet: data });
-        })
-        .catch((err) => {
-            return res.json({ result: false, error: err.message });
-        });
-}
-);
+router.post("/addPet", (req, res) => {
+  if (!checkBody(req.body, ["name", "type", "breed", "age", "weight"])) {
+    return res.json({ result: false, error: "Missing or empty fields" });
+  }
+
+  const newPet = new Pet({
+    name: req.body.name,
+    type: req.body.type,
+    breed: req.body.breed,
+    age: req.body.age,
+    weight: req.body.weight,
+    photo: null || req.body.photo,
+    owner: req.body.owner,
+  });
+
+  newPet
+    .save()
+    .then((data) => {
+      return res.json({ result: true, pet: data });
+    })
+    .catch((err) => {
+      return res.json({ result: false, error: err.message });
+    });
+});
+
+router.get("/ownerById", (req, res) => {
+  Pet.findOne("6835d1536e48b3c42fcf7d83").then((data) => {
+    res.json({ result: true, data });
+  });
+});
 
 module.exports = router;
