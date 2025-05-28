@@ -1,23 +1,42 @@
 var express = require("express");
 var router = express.Router();
 
+// Connect to Mongoose
 require("../models/connection");
 
 const Pet = require("../models/pet");
-
 const uniqid = require('uniqid');
 
 // Add the Cloudinary connection
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
 
+// Get the information from the FrontEnd 
+router.post('/', (req, res) => {
+
+    const {
+        newName: name, newRace: breed, newAge: age, newBirth: dateOfBirth, newWeight: weight, newSexe: sexe,
+        newIdentification: identification, newDocument: documents, newType: type, ownerId,
+    } = req.body.animalInfo;
+
+
+    // Creation of the Animal
+    const newPet = new Pet({
+        name, type, breed, age, dateOfBirth, weight, sexe, identification, ownerId, documents
+    })
+
+    // Save the animal
+    newPet.save()
+        .then((data) => res.json({ result: "Animal ajouté", data }))
+
+});
+
 // Get the information from the pets collection 
 router.get('/:petId', (req, res) => {
-    Pet
-        .findById(req.params.petId)
+    Pet.findById(req.params.petId)
         .then(data => {
             if (!data) {
-                res.json({ result: false, error: "No pet found."})
+                res.json({ result: false, error: "Pas d'animaul trouvé" })
             } else {
                 res.json({ result: true, petInfo: data })
             }
@@ -30,6 +49,7 @@ router.post("/:petId", async (req, res) => {
         res.json({ result: false, error: "Pas de params" });
     }
 
+    // Move to temporary file 
     const docUniqueId = uniqid()
     const documentPath = `./tmp/${docUniqueId}.pdf`;
     const resultMove = await req.files.animalNewDocument.mv(documentPath);
@@ -43,15 +63,17 @@ router.post("/:petId", async (req, res) => {
             fs.unlinkSync(documentPath);
 
             await Pet.updateOne(
-                { _id: req.params.petId }, 
-                { $push: {
-                    "documents": {
-                        uid: docUniqueId,
-                        file: resultCloudinary.secure_url?.replace(".pdf", ".jpg"),
-                        docName: docName,
-                        date: new Date(),
+                { _id: req.params.petId },
+                {
+                    $push: {
+                        "documents": {
+                            uid: docUniqueId,
+                            file: resultCloudinary.secure_url?.replace(".pdf", ".jpg"),
+                            docName: docName,
+                            date: new Date(),
+                        }
                     }
-                }}
+                }
             )
         }
 
