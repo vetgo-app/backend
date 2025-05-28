@@ -1,25 +1,25 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const documentSchema = mongoose.Schema({
-    uid: String,
-    file: String,
-    docName: String,
-    date: Date,
+  uid: String,
+  file: String,
+  docName: String,
+  date: Date,
 });
 
 const petSchema = mongoose.Schema({
-    name: String,
-    type: String,
-    breed: String,
-    age: Number,
-    weight: String,
-    sexe: String,
-    identification: Number,
-    dateOfBirth: String,
-    photo: String,
-    documents: [documentSchema],
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
-})
+  name: String,
+  type: String,
+  breed: String,
+  age: Number,
+  weight: String,
+  sexe: String,
+  identification: Number,
+  dateOfBirth: String,
+  photo: String,
+  documents: [documentSchema],
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
+});
 
-const Pet = mongoose.model('pets', petSchema);
+const Pet = mongoose.model("pets", petSchema);
 module.exports = Pet;
