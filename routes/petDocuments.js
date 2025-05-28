@@ -3,6 +3,8 @@ var router = express.Router();
 
 // Connect to Mongoose
 require("../models/connection");
+const mongoose = require("mongoose");
+
 
 const Pet = require("../models/pet");
 const uniqid = require('uniqid');
@@ -13,16 +15,15 @@ const fs = require('fs');
 
 // Get the information from the FrontEnd 
 router.post('/', (req, res) => {
-
     const {
         newName: name, newRace: breed, newAge: age, newBirth: dateOfBirth, newWeight: weight, newSexe: sexe,
-        newIdentification: identification, newDocument: documents, newType: type, ownerId,
+        newIdentification: identification, newDocument: documents, newType: type, owner,
     } = req.body.animalInfo;
 
 
     // Creation of the Animal
     const newPet = new Pet({
-        name, type, breed, age, dateOfBirth, weight, sexe, identification, ownerId, documents
+        name, type, breed, age, dateOfBirth, weight, sexe, identification, owner, documents
     })
 
     // Save the animal
@@ -36,7 +37,7 @@ router.get('/:petId', (req, res) => {
     Pet.findById(req.params.petId)
         .then(data => {
             if (!data) {
-                res.json({ result: false, error: "Pas d'animaul trouvé" })
+                res.json({ result: false, error: "Pas d'animal trouvé" })
             } else {
                 res.json({ result: true, petInfo: data })
             }
