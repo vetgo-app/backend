@@ -13,7 +13,7 @@ const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 const User = require("../models/users");
 
-router.get("/:token", (req, res) => {
+router.get("/byOwner/:token", (req, res) => {
   User.findOne({ token: req.params.token }) // on recherche l'utilisateur par son token
     .select("_id") //on selectionne que son id
     .then((data) => {
@@ -64,7 +64,7 @@ router.post("/", (req, res) => {
 });
 
 // Get the information from the pets collection
-router.get("/:petId", (req, res) => {
+router.get("/byPet/:petId", (req, res) => {
   Pet.findById(req.params.petId).then((data) => {
     if (!data) {
       res.json({ result: false });
