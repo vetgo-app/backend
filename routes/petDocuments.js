@@ -103,4 +103,9 @@ router.post("/:petId", async (req, res) => {
   }
 });
 
+router.get("/ownerById", (req, res) => {
+  Pet.findOne("6835d1536e48b3c42fcf7d83").then((data) => {
+    res.json({ result: true, data });
+  });
+});
 module.exports = router;
