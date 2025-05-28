@@ -29,7 +29,7 @@ router.post("/", (req, res) => {
   } = req.body.animalInfo;
 
   User.findOne({ token })
-    .select("_id")
+    .select("_id") //.select signifie que l'on veut recuperer que l'id de la collection user
     .then((user) => {
       // Creation of the Animal
       const newPet = new Pet({
@@ -103,9 +103,4 @@ router.post("/:petId", async (req, res) => {
   }
 });
 
-router.get("/ownerById", (req, res) => {
-  Pet.findOne("6835d1536e48b3c42fcf7d83").then((data) => {
-    res.json({ result: true, data });
-  });
-});
 module.exports = router;
