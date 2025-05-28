@@ -5,7 +5,6 @@ require("../models/connection");
 const Store = require("../models/stores");
 
 router.get("/:storeId?", function (req, res) {
-  console.log("hrere");
   if (req.params.storeId) {
     Store.findById(req.params.storeId)
       .populate("user") //populate permet de récuperer toute la collection user et pas seulement la ligne id user
@@ -38,6 +37,12 @@ router.post("/addStore", function (req, res) {
       specialization: req.body.specialization,
       occupation: req.body.occupation,
       price: req.body.price,
+      isSelectedL: req.body.isSelectedL,
+      isSelectedM: req.body.isSelectedM,
+      isSelectedMe: req.body.isSelectedMe,
+      isSelectedJ: req.body.isSelectedJ,
+      isSelectedV: req.body.isSelectedV,
+      isSelectedS: req.body.isSelectedS,
       isSelectedUrgence: req.body.isSelectedUrgence,
       isSelectedVisio: req.body.isSelectedVisio,
       isSelectedDom: req.body.isSelectedDom,

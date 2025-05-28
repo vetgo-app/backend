@@ -4,6 +4,11 @@ var router = express.Router();
 require("../models/connection");
 const Store = require("../models/appointment");
 const { checkBody } = require("../modules/checkBody");
+const Appointment = require("../models/appointment");
+
+router.get("/", (req, res) => {
+  Appointment.find().then((data) => res.json({ result: true, data }));
+});
 
 router.post("/addAppointment", (req, res) => {
   if (
@@ -31,6 +36,14 @@ router.post("/addAppointment", (req, res) => {
     .catch((err) => {
       return res.json({ result: false, error: err.message });
     });
+});
+
+router.delete("/deleteRDV/:_id", (req, res) => {
+  //recuperer l'id dans l'url
+  Appointment.findByIdAndDelete(req.params._id).then((data) => {
+    // cherche le document propre à l'id et le supprimer
+    Appointment.find().then((data) => res.json({ rdv: data })); //afficher toute la collection appointment après suppression du doc
+  });
 });
 
 module.exports = router;
