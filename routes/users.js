@@ -36,10 +36,11 @@ router.post("/signUp", function (req, res) {
       newUser
         .save()
         .then((data) => {
-          return res.json({ result: true, token: data.token });
+          res.json({ result: true, user: data });
+          ;
         })
         .catch((err) => {
-          return res.json({ result: false, error: err.message });
+          res.json({ result: false, error: err.message });
         });
     }
   });
@@ -56,12 +57,13 @@ router.post("/signin", function (req, res) {
     .then((data) => {
       if (data) {
         if (bcrypt.compareSync(req.body.password, data.password)) {
-          return res.json({ result: true, ...data });
+          console.log('je suis dans le BACKEND')
+          res.json({ result: true, user: data });
         } else {
-          return res.json({ result: false, error: "Invalid password" });
+          res.json({ result: false, error: "Invalid password" });
         }
       } else {
-        return res.json({ result: false, error: "Email not found" });
+        res.json({ result: false, error: "Email not found" });
       }
     })
     .catch((err) => {
