@@ -10,20 +10,42 @@ router.get("/", (req, res) => {
   Appointment.find().then((data) => res.json({ result: true, data }));
 });
 
-router.post("/addAppointment", (req, res) => {
-  if (
-    !checkBody(req.body, ["user", "store", "pet", "date", "price", "Reason"])
-  ) {
-    return res.json({ result: false, error: "Missing or empty fields" });
-  }
-
-  const newAppointment = new Store({
+router.post("/add", (req, res) => {
+  console.log({
     user: req.body.user,
     store: req.body.store,
     pet: req.body.pet,
     date: req.body.date,
     price: req.body.price,
-    Reason: req.body.Reason,
+    reason: req.body.reason,
+    firstRdv: req.body.firstRdv || false,
+    isMyAnimal: req.body.isMyAnimal || false,
+  });
+
+  if (
+    !checkBody(req.body, ["user", "store", "pet", "date", "price", "reason"])
+  ) {
+    return res.json({ result: false, error: "Missing or empty fields" });
+  }
+
+  console.log({
+    user: req.body.user,
+    store: req.body.store,
+    pet: req.body.pet,
+    date: req.body.date,
+    price: req.body.price,
+    reason: req.body.reason,
+    firstRdv: req.body.firstRdv || false,
+    isMyAnimal: req.body.isMyAnimal || false,
+  });
+
+  const newAppointment = new Appointment({
+    user: req.body.user,
+    store: req.body.store,
+    pet: req.body.pet,
+    date: req.body.date,
+    price: req.body.price,
+    reason: req.body.reason,
     firstRdv: req.body.firstRdv || false,
     isMyAnimal: req.body.isMyAnimal || false,
   });
