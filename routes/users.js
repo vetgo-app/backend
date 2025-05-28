@@ -13,7 +13,7 @@ router.get("/", function (req, res, next) {
 });
 
 // INSCRIPTION  D'UN UTILISATEUR PARTICULIER
-router.post("/signup", function (req, res) {
+router.post("/signUp", function (req, res) {
   if (!checkBody(req.body, ["firstname", "lastname", "email", "password"])) {
     return res.json({ result: false, error: "Missing or empty fields" });
   }
