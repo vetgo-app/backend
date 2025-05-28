@@ -28,24 +28,6 @@ router.post("/", (req, res) => {
         token,
     } = req.body.animalInfo;
 
-<<<<<<< HEAD
-  User.findOne({ token })
-    .select("_id") //.select signifie que l'on veut recuperer que l'id de la collection user
-    .then((user) => {
-      // Creation of the Animal
-      const newPet = new Pet({
-        name,
-        type,
-        breed,
-        age,
-        dateOfBirth,
-        weight,
-        sexe,
-        identification,
-        owner: user._id,
-        documents,
-      });
-=======
     User.findOne({ token })
         .select("_id")
         .then((user) => {
@@ -62,7 +44,6 @@ router.post("/", (req, res) => {
                 owner: user._id,
                 documents,
             });
->>>>>>> 81adc2f3b226689b054efca6ddd2fec1b82d5fb0
 
             // Save the animal
             newPet.save().then((data) => res.json({ result: "Animal ajouté", data }));
