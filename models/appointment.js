@@ -4,7 +4,7 @@ const appointmentSchema = mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
   store: { type: mongoose.Schema.Types.ObjectId, ref: "stores" },
   pet: { type: mongoose.Schema.Types.ObjectId, ref: "pets" },
-  date: Date,
+  date: String,
   price: Number,
   reason: String,
   firstRdv: Boolean,
