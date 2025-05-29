@@ -3,60 +3,60 @@ var router = express.Router();
 
 require("../models/connection");
 const Store = require("../models/appointment");
+const User = require("../models/users");
 const { checkBody } = require("../modules/checkBody");
 const Appointment = require("../models/appointment");
 
-router.get("/", (req, res) => {
-  Appointment.find().then((data) => res.json({ result: true, data }));
+router.get("/myRdv/:token", (req, res) => {
+  User.findOne({ token: req.params.token }) // on recherche l'utilisateur par son token
+    .then((data) => {
+      if (data) {
+        Appointment.find({ user: data._id }) // on cherche ensuite le rdv par rapport au user connecté et récuperer ci dessus par son token
+          .then((data) => {
+            res.json({ result: true, data });
+          });
+      }
+    });
+});
+
+router.get("/byPet/:petId", (req, res) => {
+  Pet.findById(req.params.petId).then((data) => {
+    if (!data) {
+      res.json({ result: false });
+    } else {
+      res.json({ result: true, petInfo: data });
+    }
+  });
 });
 
 router.post("/add", (req, res) => {
-  console.log({
-    user: req.body.user,
-    store: req.body.store,
-    pet: req.body.pet,
-    date: req.body.date,
-    price: req.body.price,
-    reason: req.body.reason,
-    firstRdv: req.body.firstRdv || false,
-    isMyAnimal: req.body.isMyAnimal || false,
-  });
-
   if (
     !checkBody(req.body, ["user", "store", "pet", "date", "price", "reason"])
   ) {
     return res.json({ result: false, error: "Missing or empty fields" });
   }
 
-  console.log({
-    user: req.body.user,
-    store: req.body.store,
-    pet: req.body.pet,
-    date: req.body.date,
-    price: req.body.price,
-    reason: req.body.reason,
-    firstRdv: req.body.firstRdv || false,
-    isMyAnimal: req.body.isMyAnimal || false,
-  });
-
-  const newAppointment = new Appointment({
-    user: req.body.user,
-    store: req.body.store,
-    pet: req.body.pet,
-    date: req.body.date,
-    price: req.body.price,
-    reason: req.body.reason,
-    firstRdv: req.body.firstRdv || false,
-    isMyAnimal: req.body.isMyAnimal || false,
-  });
-
-  newAppointment
-    .save()
+  User.findOne({ token: req.body.user }) // on recherche l'utilisateur par son token
     .then((data) => {
-      return res.json({ result: true, appointment: data });
-    })
-    .catch((err) => {
-      return res.json({ result: false, error: err.message });
+      const newAppointment = new Appointment({
+        user: data._id,
+        store: req.body.store,
+        pet: req.body.pet,
+        date: req.body.date,
+        price: req.body.price,
+        reason: req.body.reason,
+        firstRdv: req.body.firstRdv || false,
+        isMyAnimal: req.body.isMyAnimal || false,
+      });
+
+      newAppointment
+        .save()
+        .then((data) => {
+          return res.json({ result: true, appointment: data });
+        })
+        .catch((err) => {
+          return res.json({ result: false, error: err.message });
+        });
     });
 });
 

@@ -10,20 +10,20 @@ router.get("/:storeId?", function (req, res) {
       .populate("user") //populate permet de récuperer toute la collection user et pas seulement la ligne id user
       .then((data) => {
         res.json({ result: true, data }); // => data va être un OBJET (document)
-        console.log("id", data);
+        //console.log("id", data);
       });
   } else {
     Store.find()
       .populate("user") //populate permet de récuperer toute la collection user et pas seulement la ligne id user
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         res.json({ result: true, data }); // => data va être un TABLEAU (documentS)
       });
   }
 });
 
 router.post("/addStore", function (req, res) {
-  console.log("body add store ", req.body);
+  // console.log("body add store ", req.body);
   if (
     !req.body.specialization ||
     !req.body.occupation ||

@@ -37,7 +37,6 @@ router.post("/signUp", function (req, res) {
         .save()
         .then((data) => {
           res.json({ result: true, user: data });
-          ;
         })
         .catch((err) => {
           res.json({ result: false, error: err.message });
@@ -57,7 +56,7 @@ router.post("/signin", function (req, res) {
     .then((data) => {
       if (data) {
         if (bcrypt.compareSync(req.body.password, data.password)) {
-          console.log('je suis dans le BACKEND')
+          // console.log('je suis dans le BACKEND')
           res.json({ result: true, user: data });
         } else {
           res.json({ result: false, error: "Invalid password" });

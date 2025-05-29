@@ -13,6 +13,7 @@ const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 const User = require("../models/users");
 
+//route pour la récupération des animaux sur la page prendre un rdv
 router.get("/byOwner/:token", (req, res) => {
   User.findOne({ token: req.params.token }) // on recherche l'utilisateur par son token
     .select("_id") //on selectionne que son id
@@ -80,7 +81,7 @@ router.post("/:petId", async (req, res) => {
     res.json({ result: false, error: "Animal ajouté" });
   }
 
-  // Move to temporary file 
+  // Move to temporary file
   const docUniqueId = uniqid();
   const documentPath = `./tmp/${docUniqueId}.pdf`;
   const resultMove = await req.files.animalNewDocument.mv(documentPath);
