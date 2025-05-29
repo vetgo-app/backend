@@ -21,7 +21,7 @@ router.get("/byOwner/:token", (req, res) => {
       if (data) {
         Pet.find({ owner: data._id }) // on cherche ensuite l'animal par rapport au owner connecté et récuperer ci dessus par son token
           .then((data) => {
-            res.json({ result: true, data });
+            res.json({ result: true, pets: data });
           });
       }
     });
