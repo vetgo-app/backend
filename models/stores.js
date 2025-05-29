@@ -4,6 +4,10 @@ const addressSchema = mongoose.Schema({
   street: String,
   city: String,
   zipCode: String, //en string et non number car pour certain pays + memoire
+  geo: {
+    lat: Number,
+    lon: Number,
+  }
 });
 
 const storeSchema = mongoose.Schema({
