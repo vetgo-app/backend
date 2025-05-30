@@ -1,7 +1,7 @@
 // Import de la librairie supertest qui permet de faire des requêtes HTTP pour tester une API
 const request = require("supertest");
 
-// Import de app.js
+// Import de app.js (pour le fonctionnement des routes)
 const app = require("../app");
 
 // Définition d'un groupe de tests pour la route GET /myRdv
@@ -20,3 +20,5 @@ describe("GET /myRdv/:token", () => {
         expect(response.body).toHaveProperty("result");
     });
 });
+
+//pour lancer le test = > yarn jest

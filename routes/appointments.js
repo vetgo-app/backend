@@ -12,7 +12,8 @@ router.get("/myRdv/:token", (req, res) => {
     .then((data) => {
       console.log(data);
       if (data) {
-        Appointment.find({ user: data._id }) // on cherche ensuite le rdv par rapport au user connecté et récuperer ci dessus par son token
+        Appointment.find({ user: data._id })
+          .populate("pet") // on cherche ensuite le rdv par rapport au user connecté et récuperer ci dessus par son token
           .then((data) => {
             res.json({ result: true, data });
           });
@@ -37,7 +38,7 @@ router.post("/add", (req, res) => {
     return res.json({ result: false, error: "Missing or empty fields" });
   }
 
-  console.log('Adding appoo');
+  console.log("Adding appoo");
 
   User.findOne({ token: req.body.user }) // on recherche l'utilisateur par son token
     .then((data) => {
@@ -52,17 +53,17 @@ router.post("/add", (req, res) => {
         isMyAnimal: req.body.isMyAnimal || false,
       });
 
-      console.log('in user find');
+      console.log("in user find");
 
       newAppointment
         .save()
         .then((data) => {
-          console.log('appoiuntment save');
+          console.log("appoiuntment save");
 
           return res.json({ result: true, appointment: data });
         })
         .catch((err) => {
-          console.error('err', err.message)
+          console.error("err", err.message);
 
           return res.json({ result: false, error: err.message });
         });
