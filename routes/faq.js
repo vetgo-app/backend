@@ -5,10 +5,10 @@ require("../models/connection");
 
 const Faq = require("../models/faq");
 
-router.get('/', (req, res) => {
-    Faq.find().then(data => {
-        res.json({FAQ: data})
-    })
-})
+router.get("/", (req, res) => {
+  Faq.find().then((data) => {
+    return res.json({ FAQ: data });
+  });
+});
 
 module.exports = router;
