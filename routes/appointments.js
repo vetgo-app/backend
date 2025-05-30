@@ -7,6 +7,7 @@ const User = require("../models/users");
 const { checkBody } = require("../modules/checkBody");
 const Appointment = require("../models/appointment");
 
+//route pour gerer les rdv (page agenda) en fonction du token user connecté
 router.get("/myRdv/:token", (req, res) => {
   User.findOne({ token: req.params.token }) // on recherche l'utilisateur par son token
     .then((data) => {
@@ -31,6 +32,7 @@ router.get("/byPet/:petId", (req, res) => {
   });
 });
 
+//route pour ajouter un animal
 router.post("/add", (req, res) => {
   if (
     !checkBody(req.body, ["user", "store", "pet", "date", "price", "reason"])
@@ -70,11 +72,21 @@ router.post("/add", (req, res) => {
     });
 });
 
-router.delete("/deleteRDV/:_id", (req, res) => {
+//route pour annuler un rdv
+router.delete("/deleteRDV/:appointmentId/:token", (req, res) => {
   //recuperer l'id dans l'url
-  Appointment.findByIdAndDelete(req.params._id).then((data) => {
-    // cherche le document propre à l'id et le supprimer
-    Appointment.find().then((data) => res.json({ rdv: data })); //afficher toute la collection appointment après suppression du doc
+  User.findOne({ token: req.params.token }).then((data) => {
+    //verification du user, si connecté et qui?
+    if (data) {
+      //si user ok donc data ok =>
+      const userId = data._id;
+      Appointment.findByIdAndDelete(req.params.appointmentId).then((data) => {
+        // cherche le document propre à l'id et le supprimer
+        Appointment.find({ user: userId }).then((data) =>
+          res.json({ rdv: data })
+        ); //afficher toute la collection appointment après suppression du doc
+      });
+    }
   });
 });
 
