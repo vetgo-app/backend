@@ -83,7 +83,7 @@ router.post("/:petId", async (req, res) => {
 
   // Move to temporary file
   const docUniqueId = uniqid();
-  const documentPath = `./tmp/${docUniqueId}.pdf`;
+  const documentPath = `/tmp/${docUniqueId}.pdf`;
   const resultMove = await req.files.animalNewDocument.mv(documentPath);
   const docName = req.files.animalNewDocument?.name;
 
